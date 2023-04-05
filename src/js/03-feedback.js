@@ -19,27 +19,30 @@ const textareaEl = document.querySelector('.feedback-form textarea');
 const LOCALSTORAGE_KEY = "feedback-form-state";
 
 let formValues = {};
+onFormData();
 
-const onFormInput = event => {
+
+formEl.addEventListener('input', throttle(event => {
     formValues[event.target.name] = event.target.value;
-    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(onFormInput));
-};
+    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(formValues));
+}, 500)
+);
 
-const onFormSubmit = event => {
+ formEl.addEventListener('submit', event => {
     event.preventDefault();
     if (inputEl.value !== '' && textareaEl.value !== '') {
         console.log(formValues);
 localStorage.removeItem(LOCALSTORAGE_KEY);
-event.target.reset();
+event.currentTarget.reset();
 return;
     }
     alert(`All fields are required to be filled`);
 
-    };
-const onFormData = () => {
-const savedFornData = localStorage.getItem(LOCALSTORAGE_KEY);
-if (savedFornData) {
-    formValues = JSON.parse(savedFornData);
+    })
+function onFormData(){
+let savedFormData = localStorage.getItem(LOCALSTORAGE_KEY);
+if (savedFormData) {
+    formValues = JSON.parse(savedFormData);
     inputEl.value = formValues.email || '';
     textareaEl.value = formValues.message || '';
 
