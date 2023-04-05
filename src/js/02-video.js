@@ -24,6 +24,6 @@ function onPlay(e) {
 
     localStorage.setItem(Key, time);
 
-};
+}
 
 
